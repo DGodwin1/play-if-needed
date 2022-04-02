@@ -29,14 +29,16 @@ func Doubles(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var data Player
+	var players []Player
 
-	err = json.Unmarshal(j, &data)
+	err = json.Unmarshal(j, &players)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(data.Name)
-	fmt.Println(data.Rank)
+
+	for _, v := range players {
+		fmt.Println(v.Name, v.Rank)
+	}
 
 }

@@ -9,16 +9,24 @@ const InputLine = () => {
         ["rank"]: 1,
     };
 
+    let kevin = {
+        ["name"]: "kevin",
+        ["rank"]: 2,
+    };
+
+    let players = [david, kevin];
+
     return (
         <>
             <input type="text" placeholder="Players" />
             <button
                 onClick={() => {
                     console.log("clicked");
+                    console.log(JSON.stringify(david));
                     axios
                         .post(
                             "http://localhost:9001/sort-pairings",
-                            JSON.stringify(david)
+                            JSON.stringify(players)
                         )
                         .then((r) => {
                             console.log(r.data);
