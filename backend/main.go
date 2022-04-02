@@ -2,26 +2,26 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
-	"strings"
 )
 
 func main() {
 	http.HandleFunc("/sort-pairings", Doubles)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":9001", nil))
 }
 
 func Doubles(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		//You should only be able to post to the backend.
-		w.WriteHeader(http.StatusMethodNotAllowed)
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "content-type")
+	w.Header().Set("Content-Type", "application/json")
+
+	json, err := ioutil.ReadAll(r.Body)
+	if err != nil {
 		return
 	}
+	fmt.Println(string(json))
 
-	//Let's print out the players.
-	for _, player := range strings.Split(r.FormValue("players"), " ") {
-		fmt.Println(player)
-	}
-	w.WriteHeader(200)
 }
