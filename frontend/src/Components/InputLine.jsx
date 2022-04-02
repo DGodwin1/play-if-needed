@@ -5,13 +5,9 @@ const InputLine = () => {
     // A component with a player input and an 'add'
     // but so that someone can add many users.
     let david = {
-        name: "david",
+        ["name"]: "david",
+        ["rank"]: 1,
     };
-    let kevin = {
-        name: "kevin",
-    };
-
-    let players = [david, sophie];
 
     return (
         <>
@@ -20,7 +16,10 @@ const InputLine = () => {
                 onClick={() => {
                     console.log("clicked");
                     axios
-                        .post("http://localhost:9001/sort-pairings", players)
+                        .post(
+                            "http://localhost:9001/sort-pairings",
+                            JSON.stringify(david)
+                        )
                         .then((r) => {
                             console.log(r.data);
                             console.log(r.status);
